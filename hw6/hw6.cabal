@@ -1,0 +1,40 @@
+name:          hw6
+version:       1.0
+synopsis:      CS 360 Homework 6
+
+cabal-version: >= 1.10
+
+build-type: Simple
+            
+Executable test
+  default-language: Haskell98
+  
+  main-is:
+    Test.hs
+    
+  hs-source-dirs:
+    src
+  
+  build-depends:
+    base                 >= 4   && < 5,
+    test-framework       >= 0.8 && < 0.9,
+    test-framework-hunit >= 0.3 && < 0.4,
+    HUnit                >= 1.3 && < 1.4
+
+  ghc-options:
+    -Wall -fno-warn-amp
+            
+Executable while
+  default-language: Haskell98
+  
+  main-is:
+    Main.hs
+    
+  hs-source-dirs:
+    src
+  
+  build-depends:
+    base >= 4 && < 5
+
+  ghc-options:
+    -Wall -fno-warn-amp

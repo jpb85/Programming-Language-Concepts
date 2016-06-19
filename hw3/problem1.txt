@@ -1,0 +1,96 @@
+Your answers to Problem 1 go here.
+
+Problem 1
+
+What representation does the metacircular evaluator use for environments? 
+
+The environment is a list of frames. The enclosing environment of an environment is the cdr of the list. The empty environment is the empty list.
+
+(define (enclosing-envuribnebt ebv) (cdr env))
+(define (first-freame env ) (car env))
+(define the-empty-environment '())
+
+The frame of an environment is represented as a pair of lists: a list of variables bound in that frame and a list of it's associated values. (Frame-variables and frame-values )
+
+(define (frame-variables frame) (car frame))
+(define (frame-values frame) (cdr frame))
+
+
+
+frame 1
+	x 1
+	y 2
+
+(   (x y) (1 2)  )
+
+frame 1
+	x 1
+	y 2
+frame 2
+	a 1
+	b 2
+
+((   (x y) (1 2)  ) (   (a b) (1 2)  ))
+
+Problem 2
+What top-level define contains the list of primitives supported by the metacircular interpreter? Please name the variable. 
+
+The variable is called  primitive-procedures.
+Here is the whole code:
+(define primitive-procedures
+  (list (list 'car car)
+        (list 'cdr cdr)
+        (list 'cons cons)
+        (list 'null? null?)
+;;      more primitives
+)
+
+Problem 3
+Eva Lu Ator and Louis Reasoner are each experimenting with the metacircular evaluator. Eva types in the definition of map, and runs some test programs that use it. They work fine. Louis, in contrast, has installed the system version of map as a primitive for the metacircular evaluator. When he tries it, things go terribly wrong. Explain why Louis’s map fails even though Eva’s works.
+
+Eva's map and Louis's map were written in different ways.
+Eva's map was written in interpreted Scheme while Louis's map was written in the driving language. 
+Procedures that have arguments that are other procedures need to be made as a compound procedure. (not a primitive) 
+Procedures are represented differently in the metacicular evaluator than in the system version of Lisp.
+The problem with the map being treated as a primitive is that the function thats being mapped can not be processed. 
+
+(define (apply-primitive-procedure proc args)
+  (apply (primitive-implementation proc) args))
+
+Problem 4
+
+Louis Reasoner plans to reorder the cond clauses in eval so that the clause for procedure applications appears before the clause for assignments. He argues that this will make the interpreter more efficient: Since programs usually contain more applications than assignments, definitions, and so on, his modified eval will usually check fewer clauses than the originaleval before identifying the type of an expression.
+What is wrong with Louis’s plan? (Hint: What will Louis’s evaluator do with the expression (define x 3)?
+
+
+If the assignment is after the procedure then the eval will end up treating the define of (define x 3) as a procedure and not an assignment.
+It will bee considered a procedure called define with the parameter x and 3 as it's arguments.  
+Define will never be able  assign x with 3, because of that.
+
+
+Problem 5
+
+
+
+
+The function setup-environment is used to create the initial global environment used by the metacircular interpreter. For later problems, it will be convenient to add your own definitions to the initial global environment. The most convenient way to do this is to call eval-definition with the appropriate arguments from within the function setup-environment. If you were to add a definition in this manner, what arguments would you pass toeval-definition to add the following top-level define to the initial global environment? You may give your answer in the form of a Scheme expression.
+(define (not x) (if x false true))
+
+(eval-definntion ((define (not x) (if x false true)) initial-env)
+
+ exp is taken in as (define( not x) (if x false true))
+As the second element in the list is taken as the defintion-variable which is not x while the third element is taken in as (if x false true)) for the value.
+The initial-env is the made from the setup-environment. 
+
+(define-variable! (definition-variable exp)
+(mceval (definition-value exp) env)
+(define (eval-definition exp env) 
+
+
+
+
+
+
+
+
+
